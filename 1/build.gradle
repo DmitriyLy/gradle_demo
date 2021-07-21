@@ -8,6 +8,10 @@
 println 'Start'
 
 task firstTask {
+	def abc = "123"
+	println(abc)
+
+
 	println 'Gradle Rocks!!'
 	doFirst() {
 		println 'doFirst'
@@ -18,3 +22,26 @@ task firstTask {
 }
 
 println 'End'
+
+task deployToStage {
+	doLast() {
+			println("Deployed to stage")
+	}
+}
+
+task deployToProd {
+	doLast() {
+			println("Deployed to prod")
+	}
+}
+
+task cleanupFiles {
+	doLast() {
+		println 'Cleaned Up Files'
+	}
+}
+
+deployToProd.dependsOn(deployToStage)
+deployToProd.finalizedBy(cleanupFiles)
+
+//defaultTasks "deployToStage"
